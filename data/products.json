@@ -1,0 +1,16 @@
+[
+  {
+    "id": "12345",
+    "title": "Legal image",
+    "imageUrl": "https://cdn.searchenginejournal.com/wp-content/uploads/2019/07/the-essential-guide-to-using-images-legally-online.png",
+    "description": "This product is used to check the legal image source.",
+    "price": "19.99"
+  },
+  {
+    "id": "0.21482696530141643",
+    "title": "Another Product!",
+    "imageUrl": "https://s.france24.com/media/display/f2c0c114-0ff1-11f1-b00b-005056bf30b7/w:720/p:16x9/DLS-PHOTO-AI-2.png",
+    "description": "A random robotics product! OF ROBOTS",
+    "price": "18.99"
+  }
+]

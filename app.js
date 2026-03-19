@@ -13,7 +13,10 @@ app.set("views", "views");
 
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
-const { resolveInclude } = require("ejs");
+
+// importing models
+const Product = require("./models/product");
+const User = require("./models/user");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
@@ -23,8 +26,12 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
+// Association
+Product.belongsTo(User, { constraints: true, onDelete: "CASCADE" }); //Many To One Relation
+User.hasMany(Product); // One To Many Relation
+
 sequelize
-  .sync()
+  .sync({ force: true })
   .then((result) => {
     app.listen(3000);
   })

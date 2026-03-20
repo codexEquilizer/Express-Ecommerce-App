@@ -61,7 +61,8 @@ sequelize
     return user;
   })
   .then((user) => {
+    return user.createCart();
     // console.log(user);
-    app.listen(3000);
   })
+  .then((cart) => app.listen(3000))
   .catch((err) => console.log(err));

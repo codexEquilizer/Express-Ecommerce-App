@@ -17,6 +17,8 @@ const shopRoutes = require("./routes/shop");
 // importing models
 const Product = require("./models/product");
 const User = require("./models/user");
+const Cart = require("./models/cart");
+const CartItem = require("./models/cart-item");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
@@ -38,7 +40,11 @@ app.use(errorController.get404);
 
 // Association
 Product.belongsTo(User, { constraints: true, onDelete: "CASCADE" }); //Many To One Relation
-User.hasMany(Product); // One To Many Relation
+User.hasMany(Product); // One To Many Relation   //Optional
+User.hasOne(Cart);
+Cart.belongsTo(User); //Optional
+Cart.belongsToMany(Product, { through: CartItem });
+Product.belongsToMany(Cart, { through: CartItem });
 
 sequelize
   .sync()

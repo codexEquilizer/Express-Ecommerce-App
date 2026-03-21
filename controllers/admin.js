@@ -47,7 +47,7 @@ exports.postAddProduct = (req, res, next) => {
     .catch((err) => console.log(err));
 }; */
 
-exports.postEditProduct = (req, res, next) => {
+/* exports.postEditProduct = (req, res, next) => {
   const prodId = req.body.productId;
   const updatedTitle = req.body.title;
   const updatedPrice = req.body.price;
@@ -66,11 +66,10 @@ exports.postEditProduct = (req, res, next) => {
       res.redirect("/admin/products");
     })
     .catch((err) => console.log(err));
-};
+}; */
 
 exports.getProducts = (req, res, next) => {
-  req.user
-    .getProducts() //magic association methods
+  Product.fetchAll()
     .then((products) => {
       res.render("admin/products", {
         prods: products,
@@ -81,7 +80,7 @@ exports.getProducts = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
-exports.postDeleteProduct = (req, res, next) => {
+/* exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
   Product.findByPk(prodId)
     .then((product) => {
@@ -92,4 +91,4 @@ exports.postDeleteProduct = (req, res, next) => {
       res.redirect("/admin/products");
     })
     .catch((err) => console.log(err));
-};
+}; */

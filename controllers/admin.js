@@ -23,17 +23,15 @@ exports.postAddProduct = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
-/* exports.getEditProduct = (req, res, next) => {
+exports.getEditProduct = (req, res, next) => {
   const editMode = req.query.edit;
   if (!editMode) {
     return res.redirect("/");
   }
   const prodId = req.params.productId;
-  req.user
-    .getProducts({ where: { id: prodId } }) //magic association methods
+  Product.findById(prodId)
     // Product.findByPk(prodId)
-    .then((products) => {
-      const product = products[0];
+    .then((product) => {
       if (!product) {
         return res.redirect("/");
       }
@@ -45,28 +43,30 @@ exports.postAddProduct = (req, res, next) => {
       });
     })
     .catch((err) => console.log(err));
-}; */
+};
 
-/* exports.postEditProduct = (req, res, next) => {
+exports.postEditProduct = (req, res, next) => {
   const prodId = req.body.productId;
   const updatedTitle = req.body.title;
   const updatedPrice = req.body.price;
   const updatedImageUrl = req.body.imageUrl;
   const updatedDesc = req.body.description;
-  Product.findByPk(prodId)
-    .then((product) => {
-      product.title = updatedTitle;
-      product.price = updatedPrice;
-      product.imageUrl = updatedImageUrl;
-      product.description = updatedDesc;
-      return product.save(); // This save method is coming from sequelize where it will update the existing db if data is already there or it will create a new one if data is empty.
-    })
+
+  const product = new Product(
+    updatedTitle,
+    updatedPrice,
+    updatedDesc,
+    updatedImageUrl,
+    prodId,
+  );
+  product
+    .save()
     .then((result) => {
       console.log("UPDATED PRODUCT");
       res.redirect("/admin/products");
     })
     .catch((err) => console.log(err));
-}; */
+};
 
 exports.getProducts = (req, res, next) => {
   Product.fetchAll()
@@ -80,15 +80,12 @@ exports.getProducts = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
-/* exports.postDeleteProduct = (req, res, next) => {
+exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  Product.findByPk(prodId)
-    .then((product) => {
-      return product.destroy();
-    })
+  Product.deleteById(prodId)
     .then((result) => {
       console.log("PRODUCT DESTROYED");
       res.redirect("/admin/products");
     })
     .catch((err) => console.log(err));
-}; */
+};

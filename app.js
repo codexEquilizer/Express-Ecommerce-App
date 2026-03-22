@@ -2,7 +2,8 @@ const path = require("path");
 
 const express = require("express");
 const bodyParser = require("body-parser");
-const mongoConnect = require("./util/database").mongoConnect;
+const { mongoConnect } = require("./util/database");
+const User = require("./models/user");
 
 const errorController = require("./controllers/error");
 
@@ -19,12 +20,12 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Middleware to store the User
 app.use((req, res, next) => {
-  /* User.findByPk(1)
+  User.findById("69c050c76f5733185c76caa4")
     .then((user) => {
       req.user = user;
       next();
     })
-    .catch((err) => console.log(err)); */
+    .catch((err) => console.log(err));
   next();
 });
 

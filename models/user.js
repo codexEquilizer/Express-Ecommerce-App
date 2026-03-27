@@ -1,35 +1,31 @@
-const mongodb = require("mongodb");
-const { getDb } = require("../utils/database");
+const mongodb = require('mongodb');
+const getDb = require('../util/database').getDb;
 
 const ObjectId = mongodb.ObjectId;
+
 class User {
   constructor(username, email) {
-    this.username = username;
+    this.name = username;
     this.email = email;
   }
 
   save() {
     const db = getDb();
-    return db
-      .collection("users")
-      .insertOne(this)
-      .then((result) => {
-        console.log("User saved:", result);
-      })
-      .catch((err) => console.log(err));
+    return db.collection('users').insertOne(this);
   }
 
-  findById(id) {
-    // Logic to find a user by ID
+  static findById(userId) {
     const db = getDb();
     return db
-      .collection("users")
-      .findOne({ _id: new ObjectId(id) })
-      .then((user) => {
-        console.log("User found:", user);
+      .collection('users')
+      .findOne({ _id: new ObjectId(userId) })
+      .then(user => {
+        console.log(user);
         return user;
       })
-      .catch((err) => console.log(err));
+      .catch(err => {
+        console.log(err);
+      });
   }
 }
 
